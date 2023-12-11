@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}|Epsilearn{% endblock %}</title>
+    <link rel="icon" href="/static/image/epsilogo.jpeg" type="image/x-icon">
+    <!-- CSS de Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.6/htmx.min.js" integrity="sha512-tGWc4YBM6ag1pJndcieiU2r+lJXdzBRk70mHE13JoGeZI/QdWQkQ6q1CL1xYdJtTOfARf5oPcxJCnS6bLaM+KA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Vibur&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dangrek&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+  />
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const animateElements = document.querySelectorAll(".animate-element");
+    
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const animationName = entry.target.getAttribute("data-animation");
+                    entry.target.classList.add("animate__animated", `animate__${animationName}`);
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+    
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+  </script>
+
+  <script>
+    // Stocker la position de défilement lorsqu'un lien est cliqué
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        sessionStorage.setItem('scrollPosition', window.scrollY);
+    });
+});
+
+// Restaurer la position de défilement lorsque l'utilisateur revient en arrière
+window.addEventListener('popstate', function(e) {
+    const scrollPosition = sessionStorage.getItem('scrollPosition');
+    if (scrollPosition !== null) {
+        window.scrollTo(0, scrollPosition);
+        sessionStorage.removeItem('scrollPosition');
+    }
+});
+
+  </script>
+    <!-- CSS personnalisé -->
+    <style>
+ /* Barre de défilement verticale */
+::-webkit-scrollbar {
+    width: 10px; /* Largeur de la barre de défilement */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Couleur de l'arrière-plan de la piste */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 255, 0.3); /* Couleur de la poignée de défilement */
+    border-radius: 5px; /* Coins arrondis de la poignée */
+}
+
+/* Barre de défilement horizontale */
+::-webkit-scrollbar-horizontal {
+    height: 10px; /* Hauteur de la barre de défilement horizontale */
+}
+
+::-webkit-scrollbar-track-horizontal {
+    background-color: transparent; /* Couleur de l'arrière-plan de la piste horizontale */
+}
+
+::-webkit-scrollbar-thumb-horizontal {
+    background-color: #1461d3; /* Couleur de la poignée de défilement horizontale */
+    border-radius: 5px; /* Coins arrondis de la poignée horizontale */
+}
+
+        
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 2s ease-in-out;
+    opacity: 1;
+}
+
+#loader {
+  border: 8px solid #f3f3f3; /* Augmentez la valeur */
+    border-top: 8px solid #3498db; /* Augmentez la valeur */
+    border-radius: 50%;
+    width: 100px; /* Augmentez la valeur */
+    height: 100px; /* Augmentez la valeur */
+    animation: spin 2s linear infinite;
+
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide loader when content is loaded */
+.loaded #loader-wrapper {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loaded #loader-wrapper,
+.loaded #loader {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.loaded .page-content {
+    display: block;
+}
+
+
+    </style>
+    {% block style %}
+    
+    <style>
+        /* Styles personnalisés pour le menu déroulant */
+        .dropdown-menu {
+            background-color: #f8f9fa;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+        .dropdown-menu a {
+            color: #242729;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-menu a:hover {
+            background-color: #e9ecef;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .user-initials {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: blue;
+            color: #ffffff;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover{
+            color: blue;
+        }
+        
+      
+
+
+
+    </style>
+{% endblock %}
+</head>
+
+<body style="font-family: 'Kanit';">
+ <div class="page-content hidden">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+    {% block nav %}
+    <!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent align-content-center justify-content-center shadow " style="justify-content: center; height: 40px;z-index: 9999999999999999999999;padding-bottom: 50px;padding-top: 20px;" >
+        <div class="container text-center" style="background-color:transparent;border-radius: 20px;z-index: 9;opacity: 1;margin-top: 20px;">
+            <a class="navbar-brand" href="/accueil" style="color: blue;">RULA Plus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: none; background-color: none; color: #FFFFFF; font-size: 14px;">
+                <span class="navbar-toggler-icon" style="transform: scale(1.5);"></span>
+            </button>          
+            <div class="collapse navbar-collapse align-content-center justify-content-center" id="navbarNav" >
+                <ul class="navbar-nav" style="z-index: 99999999999999999;">
+                    <li class="nav-item">
+                        <a class="nav-link" id="bib" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="langue" href="/meslangue">Méthode RULA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="evenement" href="/evenement">Mes rapports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  id="workroom" href="/chambrepomodoro">Formation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="about"  href="/about">À Propos</a>
+                    </li>          
+                        </ul>
+                    </li>
+                    <script>
+                        document.getElementById('dec').addEventListener('click', function() {
+                            // Appeler l'API pour décrémenter le compteur
+                            fetch('/decrement', { method: 'POST' })
+                                .then(response => response.json())
+                                .then(data => console.log(data.message))
+                                .catch(error => console.error('Une erreur s\'est produite', error));
+                        });
+                    </script>
+               
+
+               
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+    <!-- Contenu de la page -->
+    <div  style="font-family:'Kanit';overflow-x:hidden;overflow-y: hidden;">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+    <!-- Scripts JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+   
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+
+        // Sélectionnez l'élément de chargement
+const loader = document.getElementById("loader");
+// Fonction pour cacher le chargement et afficher le contenu de la page
+function hideLoader() {
+    loader.style.display = "none";
+    document.body.style.overflow = "auto"; // Rétablir le défilement de la page
+}
+
+// Attendez que le contenu de la page soit chargé
+window.addEventListener("load", () => {
+    // Obtenez toutes les images de la page
+    const images = document.querySelectorAll("img");
+    const totalImages = images.length;
+    let imagesLoaded = 0;
+
+    // Fonction pour vérifier si toutes les images sont chargées
+    function checkImagesLoaded() {
+        imagesLoaded++;
+        if (imagesLoaded === totalImages) {
+            // Toutes les images sont chargées, cachez le loader
+            hideLoader();
+        }
+    }
+
+    // Attachez un gestionnaire d'événement pour chaque image
+    images.forEach((img) => {
+        img.addEventListener("load", checkImagesLoaded);
+        img.addEventListener("error", checkImagesLoaded); // Gestion des erreurs d'image
+    });
+});
+    </script>
+    <script>
+         let accordian = document.getElementsByClassName("FAQ__title");
+
+for (let i = 0; i < accordian.length; i++) {
+  accordian[i].addEventListener("click", function () {
+    if (this.childNodes[1].classList.contains("fa-plus")) {
+      this.childNodes[1].classList.remove("fa-plus");
+      this.childNodes[1].classList.add("fa-times");
+    } else {
+      this.childNodes[1].classList.remove("fa-times");
+      this.childNodes[1].classList.add("fa-plus");
+    }
+
+    let content = this.nextElementSibling;
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+}
+
+
+    </script>
+    
+
+</body>
+</html>

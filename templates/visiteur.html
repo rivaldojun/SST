@@ -1,0 +1,714 @@
+{% extends "index.html" %}
+
+{% block title %}Epsilearn{% endblock %}
+
+
+{% block content %}
+
+<style>
+  .scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: none;
+}
+
+.scroll-top-btn.show {
+  display: block;
+}
+
+/* Ajoutez ceci à votre feuille de style CSS */
+.cursor-pointer {
+  cursor: pointer; /* Change le curseur en une main */
+  text-decoration: none;
+  color: red; /* Ajoute une soulignement pour indiquer qu'il est interactif */
+}
+
+/* Rendre le tooltip responsive */
+
+ .tooltip.show {
+    max-width: 50px; /* Ajuste la largeur du tooltip en fonction de la largeur de l'écran */
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+    .scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: none;
+  z-index: 9999999;
+}
+
+.scroll-top-btn.show {
+  display: block;
+}
+@keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .bounce-arrow {
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+        .service-item {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Transition pour l'effet de survol */
+}
+
+.service-item::before {
+  content: '';
+}
+
+.service-item:hover {
+  transform: scale(1.05); /* Effet d'agrandissement au survol */
+}
+
+.service-item:hover::before {
+  opacity: 1; /* Rend le cercle visible au survol */
+}
+
+
+</style>
+<script>
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+// Affiche ou masque le bouton en fonction de la position de défilement
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 100) {
+    scrollTopBtn.classList.add('show');
+  } else {
+    scrollTopBtn.classList.remove('show');
+  }
+});
+
+// Fait défiler jusqu'en haut de la page
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+
+</script>
+
+
+
+ <style>
+
+  #accueil{
+    text-decoration: overline ;
+    color: rgb(0, 0, 0)
+  }
+  
+ </style> 
+  
+
+<style>
+  /* Style pour le footer */
+footer {
+  padding-top: 40px; /* Espacement en haut du footer */
+  color: #5c5555; /* Couleur du texte */
+  background-color: nONE; /* Couleur de fond bleu nuit */
+}
+
+/* Style pour la section des réseaux sociaux */
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Espacement en bas pour séparer des autres sections */
+}
+
+.footer-social span {
+  font-size: 16px; /* Taille de police du texte des réseaux sociaux */
+}
+
+.footer-social a {
+  font-size: 20px; /* Taille de police des icônes des réseaux sociaux */
+  color: #5c5555; /* Couleur jaune doré pour les icônes des réseaux sociaux */
+  margin: 0 5px; /* Espacement horizontal entre les icônes des réseaux sociaux */
+}
+
+/* Style pour les liens du footer */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px; /* Espacement en bas pour séparer des autres sections */
+}
+
+.footer-links a {
+  font-size: 14px; /* Taille de police des liens du footer */
+  color: #5c5555; /* Couleur du texte des liens du footer */
+  margin: 0 15px; /* Espacement horizontal entre les liens du footer */
+}
+
+/* Style pour le titre des sections du footer */
+.footer-title {
+  font-size: 18px; /* Taille de police des titres des sections du footer */
+  font-weight: bold; /* Gras pour mettre en évidence */
+  color: #5c5555; /* Couleur jaune doré pour les titres des sections du footer */
+  margin-bottom: 15px; /* Espacement en bas pour séparer des autres éléments */
+}
+
+/* Style pour le texte du footer */
+.footer-text {
+  font-size: 14px; /* Taille de police du texte du footer */
+  line-height: 1.6; /* Hauteur de ligne pour un meilleur espacement du texte */
+  color: #5c5555; /* Couleur du texte du footer */
+}
+
+/* Style pour le lien du nom de l'entreprise */
+.footer-logo {
+  font-size: 18px; /* Taille de police du lien du nom de l'entreprise */
+  font-weight: bold; /* Gras pour mettre en évidence */
+  color: #ffffff; /* Couleur jaune doré pour le lien du nom de l'entreprise */
+}
+
+/* Style pour le copyright */
+.footer-copyright {
+  font-size: 14px; /* Taille de police du texte du copyright */
+  color: #5c5555; /* Couleur du texte du copyright */
+  background-color: rgba(0, 0, 0, 0.025); /* Couleur de fond pour le copyright */
+  padding: 10px 0; /* Espacement intérieur pour le copyright */
+  text-align: center; /* Centrer le texte du copyright */
+}
+
+
+  
+
+    .hero-content h1 h3 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .hero-content .btn {
+      font-size: 1.1rem;
+    }
+ /* Animation répétitive pour le titre */
+ .hero-content h1 h3 {
+    position: relative;
+    animation: bounceText 2s ease-in-out infinite;
+  }
+
+  /* Animation répétitive pour les boutons */
+  .hero-content .btn {
+    position: relative;
+    animation: fadeInOut 2s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  /* Animation répétitive pour la vidéo ou l'élément en colonne */
+  .hero .col-md-6 {
+    position: relative;
+    animation: slideInRight 2s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes bounceText {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes slideInRight {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(10px);
+    }
+  }
+
+  
+/* Style pour les titres */
+.features h3 {
+  font-size: 24px; /* Taille de police des titres */
+  color: #003c7b; /* Couleur bleue pour les titres */
+  margin-bottom: 15px; /* Espacement en bas pour séparer le titre du paragraphe */
+}
+
+/* Style pour les paragraphes */
+.features p {
+  font-size: 16px; /* Taille de police du texte */
+  color: #ffffff; /* Couleur du texte principale */
+  line-height: 1.6; /* Hauteur de ligne pour une meilleure lisibilité */
+}
+
+
+
+
+
+
+/* Style pour la section FAQ */
+.FAQ__list__container {
+  width: 100%;
+  padding: 40px 0; /* Espacement intérieur pour les éléments à l'intérieur de la section */
+
+}
+
+/* Style pour le titre de la FAQ */
+.FAQ__heading {
+  width: 100%;
+  font-size: 28px; /* Taille de police du titre */
+  text-align: center; /* Centrer le texte */
+  font-weight: bold; /* Gras pour mettre en évidence */
+  color: #CBD0D8; /* Couleur du texte */
+  margin-bottom: 20px; /* Espacement en bas pour séparer le titre des questions */
+}
+
+/* Style pour chaque question */
+.FAQ__accordian {
+  width: 100%;
+  margin-bottom: 20px; /* Espacement entre chaque question */
+}
+
+/* Style pour le bouton de la question */
+.FAQ__title {
+  font-family: 'Kanit';
+  width: 100%;
+  display: flex;
+  min-height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-size: 20px; /* Taille de police du bouton */
+  background-color: rgb(0, 0, 0); /* Couleur de fond pour le bouton */
+  border: 1px solid #000000; /* Bordure autour du bouton */
+  color: #ffffff; /* Couleur du texte du bouton */
+  cursor: pointer; /* Curseur pointer pour indiquer que c'est cliquable */
+}
+
+/* Style pour l'icône /moins) du bouton */
+.FAQ__title i {
+  font-size: 20px; /* Taille de l'icône */
+}
+
+/* Style pour la section visible (réponse à la question) */
+.FAQ__visible {
+  background-color: blue; /* Couleur de fond pour la réponse */
+  padding: 0px 20px; /* Espacement intérieur pour le contenu de la réponse */
+  max-height: 0; /* Réponse initialement cachée */
+  overflow: hidden; /* Cacher le contenu débordant de la zone de réponse */
+  transition: max-height 0.5s ease-in-out;
+   /* Animation pour afficher/cacher la réponse */
+}
+
+/* Style pour le texte de la réponse */
+.FAQ__visible > p {
+  margin: 1rem 0; /* Marge autour du texte de la réponse */
+  color: #ffffff; /* Couleur du texte de la réponse */
+}
+
+/* Media query pour les écrans de taille moyenne (tablettes, ordinateurs portables) */
+@media (min-width: 768px) {
+  .FAQ__list {
+    padding: 1rem 5rem; /* Espacement intérieur grand sur les écrans grands */
+  }
+}
+
+/* Media query pour les écrans grands (ordinateurs de bureau, grands écrans) */
+@media (min-width: 1024px) {
+  .FAQ__list {
+    padding: 1rem 15rem; /* Espacement intérieur encore grand sur les écrans grands */
+  }
+}
+
+.custom-hr {
+    border: none;
+    border-top: 3px solid #000000; /* Ajustez l'épaisseur de la ligne ici */
+    margin: 20px 0; /* Ajustez la marge si nécessaire */
+    
+  }
+  body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url('/static/image/bg.jpeg');
+  color: rgb(255, 255, 255);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-attachment: fixed;
+  overflow: auto;
+}
+.online-dot {
+    width: 8px;
+    height: 8px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+
+  .profile-img {
+              width: 100px; /* Ajustez la taille de la photo de profil selon vos besoins */
+              height: 100px;
+              object-fit: cover;
+              border-radius: 50%;
+              margin-right: 20px;
+        }
+        .stars {
+            color: gold;
+        }
+        .formation-icon {
+            color: green;
+        }
+   
+  
+
+
+  </style>
+  <script>
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 2000);
+    });
+</script>
+
+</script>
+<div class="page-content hidden">
+<div class="">
+ 
+<div class="">
+  <main class="my-4">
+    <!-- ... Autres balises HTML ... -->
+    <section class="hero row align-items-center" style="height: auto; min-height: 90vh; background-size: cover; background-repeat: no-repeat; opacity: 1; z-index: -20; background-position: 20%; border-radius: 2px; padding: 50px;">
+      <div class="col-md-12 hero-content animate-element" data-animation="fadeInUp" style="animation-duration: 0.8s;margin-top: -42px;">
+        <div style="color: black; text-align: center;">
+        </div>
+        <br>
+        <!-- Utilisation d'un h1 pour les grands écrans -->
+        <h1 class="d-none d-md-block mb-4 animate-element" data-animation="fadeInUp" style="animation-duration: 1.6s;padding-top: 50px; text-align: center; color: rgb(0, 0, 0); font-size: 55px; font-family:'Kanit';font-weight: bold;">
+          Bienvenue dans l'Évaluation Ergonomique <br> Numérique 
+        </h1>
+        
+        <!-- Utilisation d'un h3 pour les petits écrans -->
+        <h3 class="d-block d-md-none mb-4 animate-element" data-animation="fadeInUp" style="animation-duration: 2.4s;color: rgb(117, 117, 117); text-align: center; font-size: 25px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+          Transformez Votre Approche Ergonomique avec notre Nouvelle Plateforme Numérique
+        </h3>
+        
+        <p class="mb-4 animate-element" data-animation="fadeInUp" style="animation-duration: 3.6s;color: #000000; font-family:'Vibur', sans-serif; text-align: center;">
+          Transformez Votre Approche Ergonomique avec notre Nouvelle Plateforme Numérique
+        </p>
+        
+        <div class="container animate-element mt-5 mb-4" data-animation="fadeInUp" style="animation-duration: 4.5s;height: 530px;width: 600px;background:linear-gradient(to right ,rgb(171, 171, 255) ,white)">
+          <img src="../static/R.jfif" height="500" width="600">
+        </div>
+        <div class="animate-element mt-5" data-animation="fadeInUp" style="animation-duration: 4.5s; display: flex; justify-content: center; text-align: center;">
+          <a href="/rula" class="btn btn-panel" style="background-color: rgb(131, 131, 250); color: white; width: 300px; height: 100px; line-height: 90px;font-size: 30px;font-family:monospace;">COMMENCER</a>
+        </div>
+      </div>
+      
+
+      <div class="bounce-arrow animate-element mt-5" data-animation="fadeInUp" style="animation-duration: 4.5s;">
+        <a href="#services">
+        <i class="fa fa-long-arrow-down" style="color: rgb(0, 0, 0); font-size: 2.5em;"></i>
+      </a>
+    </div>
+    </section>
+    
+
+      <div style="height: 40px;"></div>
+    
+      <div class="col">
+        <div class="row">
+          <div class="col-md-6">
+      <section class="features mt-4" id="fonc" style="scale: 0.85;">
+        <div class="container shadow-lg animate-element" data-animation="fadeInLeft" style="animation-duration: 0.8s;background:linear-gradient(to right ,rgb(255, 196, 196) ,white);border-radius: 20px;min-height: 430px;">
+            <div class="row align-items-center p-5">
+                <div class="col-md-6 animate-element" data-animation="fadeInLeft" style="animation-duration: 1.2s;">
+                    <h3 style="font-family:  'Kanit'; font-size: 40px; color: rgb(0, 0, 0); font-weight: bold; margin-bottom: 15px;">Ergonomie Numérique</h3>
+                    <p style="color: #000000; font-family: 'Kanit'; ">Explorez comment la transition vers l'évaluation ergonomique en ligne offre une approche plus accessible, rapide et précise, facilitant l'identification et la résolution des problèmes ergonomiques.</p>
+                </div>
+                <div class="col-md-6 animate-element text-center" data-animation="fadeInRight" style="animation-duration: 1.2s;">
+                    <img src="/static/image/apprend.png" alt="Icône 1" class="img-fluid mb-4" style="max-width: 100%; height: auto;scale: 0.5;">
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+    <div class="col-md-6">
+    <section class="features mt-4" id="fonc6" style="scale: 0.85;">
+      <div class="container shadow-lg animate-element" data-animation="fadeInLeft" style="animation-duration: 0.8s;background:linear-gradient(to right ,rgb(196, 196, 255) ,white);border-radius: 20px;min-height: 430px;" >
+          <div class="row align-items-center p-5" >
+              <div class="col-md-6 animate-element" data-animation="fadeInLeft" style="animation-duration: 1.2s;">
+                  <h3 style="font-family:  'Kanit'; font-size: 40px; color: blue; font-weight: bold;">Innovation Technologique</h3>
+                  <p style="color: #000000; font-family: 'Kanit';">Découvrez les avancées technologiques telles que l'intelligence artificielle et les analyses de données, intégrées dans la méthode RULA digitalisée, pour fournir des recommandations personnalisées et anticiper les besoins ergonomiques futurs. </p>
+
+              </div>
+              <div class="col-md-6 animate-element " data-animation="fadeInRight" style="animation-duration: 1.2s;">
+                  <img src="/static/image/enseignement.jfif" alt="Icône 1" id="img-effect" class="img-fluid mb-4" style="max-width: 100%; height: auto;scale: 0.6;">
+              </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+    <section class="features mt-4" id="fonc1" style="scale: 0.85;">
+      <div class="container shadow-lg animate-element" data-animation="fadeInLeft" style="animation-duration: 0.8s;background:linear-gradient(to right ,rgb(196, 196, 255) ,white);border-radius: 20px;min-height: 430px;">
+          <div class="row align-items-center p-5">
+              <div class="col-md-6 animate-element" data-animation="fadeInLeft" style="animation-duration: 1.2s;">
+                  <h3 style="font-family: 'Kanit'; font-size: 40px; color: rgb(0, 0, 255); font-weight: bold;">Formation et Sensibilisation</h3>
+                  <p style="color: #000000; font-family: 'Kanit';">Accédez à des modules de formation interactifs en ligne visant à familiariser les utilisateurs avec la méthode RULA digitalisée, tout en sensibilisant à l'importance de l'ergonomie pour la santé et la productivité.</p>
+              </div>
+              <div class="col-md-6 animate-element" data-animation="fadeInRight" style="animation-duration: 1.2s;">
+                  <img src="/static/image/discuter.gif" alt="Icône 1" class="img-fluid mb-4" style="max-width: 100%; height: auto;scale: 0.5;">
+              </div>
+          </div>
+      </div>
+  </section>
+</div>
+<div class="col-md-6">
+    <section class="features mt-4" id="fonc2" style="scale: 0.85;">
+        <div class="container shadow-lg animate-element" data-animation="fadeInLeft" style="animation-duration: 0.8s;background:linear-gradient(to right ,rgb(255, 196, 196) ,white);border-radius: 20px;min-height: 430px;">
+            <div class="row align-items-center p-5">
+                <div class="col-md-6 animate-element" data-animation="fadeInLeft" style="animation-duration: 1.2s;">
+                    <h3 style="font-family: 'Kanit'; font-size: 40px; color: rgb(0, 0, 0); font-weight: bold;">Impact sur la Santé et le Bien-être au Travail</h3>
+                    <p style="color: #000000; font-family: 'Kanit';">Explorez les bénéfices concrets de la méthode RULA digitalisée sur la santé et le bien-être des travailleurs, illustrés par des études de cas démontrant des améliorations significatives dans des environnements professionnels variés.</p>
+                </div>
+                <div class="col-md-6 animate-element" data-animation="fadeInRight" style="animation-duration: 1.2s;">
+                    <img src="/static/image/calendrier.gif" alt="Icône 1" class="img-fluid mb-4" style="max-width: 100%; height: auto;scale: 0.5;">
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+  </div>
+</div>
+<style>
+  .carousel-item .card {
+   transform: rotate(-4deg);
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+ }
+
+ .carousel-item.active .card {
+   transform: rotate(2);
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+ }
+</style>
+</style>
+
+  </main>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const animateElements = document.querySelectorAll(".animate-element");
+  
+      const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  const animationName = entry.target.getAttribute("data-animation");
+                  entry.target.classList.add("animate__animated", `animate__${animationName}`);
+                  observer.unobserve(entry.target);
+              }
+          });
+      });
+  
+      animateElements.forEach(element => {
+          observer.observe(element);
+      });
+  });
+</script>
+
+
+  
+<!-- Footer -->
+<footer class="text-center text-lg-start  text-muted container-fluid" style="background-color: rgb(22, 22, 22);color: white;">
+
+  <section class="footer-links">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4 footer-title" style="color: rgb(255, 255, 255);font-family: 'Kanit';">
+            Projet de GROUPE
+          </h6>
+          <p class="footer-text">
+            <img src="static/image/2.png" alt="WELP Logo" style="width: 100px; height: 100px; margin-right: 10px;border-radius: 10px;">
+            <img src="static/image/1.png" alt="WELP Logo" style="width: 100px; height: 100px; margin-right: 10px;border-radius: 10px;">
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4 footer-title" style="color: rgb(255, 255, 255);">
+            Fonctionnalite
+          </h6>
+          <p style="color: rgb(255, 255, 255);">
+            <a href="/discipline" class="text-reset footer-link" style="text-decoration: none;">Methode RULA</a>
+          </p>
+        
+
+          <!-- <p>
+            <a href="#!" class="text-reset footer-link">React</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset footer-link">Vue</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset footer-link">Laravel</a>
+          </p> -->
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4 footer-title" style="color: rgb(255, 255, 255);">
+            Activite
+          </h6>
+          <p style="color: rgb(255, 255, 255);">
+            <a href="/offreprof" class="text-reset footer-link" style="text-decoration: none;">Mes rapports</a>
+          </p>
+          
+          <!-- <p>
+            <a href="#!" class="text-reset footer-link">React</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset footer-link">Vue</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset footer-link">Laravel</a>
+          </p> -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4 footer-title" style="color: rgb(255, 255, 255);">
+            Liens
+          </h6>
+          <p style="color: rgb(255, 255, 255);">
+            <a href="/" class="text-reset footer-link" style="color: rgb(0, 0, 0);text-decoration: none;">A propos</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4" style="color: white;">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4 footer-title" style="color: rgb(255, 255, 255);">Contact</h6>
+          <p class=""><i class="fas fa-home me-3 "></i> Maroc ,  MA</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4 footer-copyright">
+    
+      <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom footer-social" id="contact">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+          <span style="color: rgb(255, 255, 255);">Rejoignez nous sur nos reseaux sociaux:</span>
+        </div>
+        <!-- Left -->
+    
+        <!-- Right -->
+        <div>
+          <!-- Social media links -->
+          <a href="#" class="me-4 link-secondary" >
+            <i class="fab fa-facebook-f" style="color: blue;"></i>
+          </a>
+          <a href="#" class="me-4 link-secondary">
+            <i class="fab fa-twitter" style="color: rgb(89, 89, 255);"></i>
+          </a>
+          <a href="#" class="me-4 link-secondary">
+            <i class="fab fa-instagram" style="color: rgb(226, 147, 29);"></i>
+          </a>
+          <a href="#" class="me-4 link-secondary">
+            <i class="fab fa-linkedin" style="color: blue;"></i>
+          </a>
+        </div>
+        <!-- Right -->
+      </section>
+
+      
+    © 2023 RULA+. Tous droits réservés.
+  </div>
+  <!-- Copyright -->
+</footer>
+</main>
+</div>
+</div>
+
+
+
+{% endblock %}
