@@ -24,7 +24,7 @@
   }
   </style>
   <div>
-    <div id="deactivate"  class="container mt-1" style="padding: 10px;text-align: center;background-color:black ;border-radius: 20px;color: white;width: fit-content;">Couper la camera</div>
+    <div id="deactivate"  class="container mt-1" style="padding: 10px;text-align: center;background-color:black ;border-radius: 20px;color: white;width: fit-content;display: none;">Couper la camera</div>
     <div class="modal" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="cameraModalLabel" aria-hidden="true" style="margin-top: 200px;;">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -48,7 +48,10 @@
     <div class="row mt-1" style="background-color: rgb(200, 227, 255);color: rgb(0, 0, 0);">
       <div class="col-md-6 container p-3 ">
        <a  href="#" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;">Commencer</h6></a>
-        <video id="webcam" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;" autoplay></video>
+        <!-- <video id="webcam" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;" autoplay>
+            <source src="{{ url_for('video_feed_1') }}" type="video/mp4">
+        </video> -->
+        <img id="vid" src="{{ url_for('video_feed_1') }}" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;">
       </div>
       <div class="col-md-6 container p-3">
        <div id="timer">0:00</div>
@@ -67,7 +70,7 @@
     const timerElement = document.getElementById('timer');
        const colorChangeElement = document.getElementById('start');
 function openCameraModal() {
-      $('#cameraModal').modal('show');
+    //   $('#cameraModal').modal('show');
       colorChangeElement.style.backgroundColor ='white'
       const deactivate = document.getElementById('deactivate');
       deactivate.textContent = 'Couper la caméra';
