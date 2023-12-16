@@ -16,9 +16,7 @@
     overflow: hidden;
     
   }
-  #start{
-    background-color: white;
-  }
+
   #deactivate:hover{
     cursor: pointer;
   }
@@ -47,11 +45,8 @@
   </div>
     <div class="row mt-1" style="background-color: rgb(200, 227, 255);color: rgb(0, 0, 0);">
       <div class="col-md-6 container p-3 ">
-       <a  href="/start" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;">Commencer</h6></a>
-        <video id="webcam" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;"  autoplay>
-            <!-- <source src="{{ url_for('video_feed_1') }}" type="video/mp4"> -->
-        </video>
-        
+       <a  onclick="history.back()" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(255, 255, 255);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;background-color: red;">Arreter</h6></a>
+        <img id="vid" src="{{ url_for('video_feed_1') }}" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;">
         
       </div>
       <div class="col-md-6 container p-3">
@@ -65,16 +60,16 @@
     </div>
   
     <script>
+        
         let timerInterval;
     let startTime;
     let running = false;
     const timerElement = document.getElementById('timer');
-       const colorChangeElement = document.getElementById('start');
+    const colorChangeElement = document.getElementById('start');
+    time()
 function openCameraModal() {
-       $('#cameraModal').modal('show');
-      colorChangeElement.style.backgroundColor ='white'
+    //    $('#cameraModal').modal('show');
       const deactivate = document.getElementById('deactivate');
-      deactivate.textContent = 'Couper la caméra';
 
     }
 
@@ -113,27 +108,15 @@ function openCameraModal() {
     });
 
 // Fonction pour changer la couleur
-// function changeColor() {
-//   // Récupérer la couleur actuelle
-//   const currentColor = colorChangeElement.style.backgroundColor;
-//   if (currentColor==='white'){
-//     startTime = new Date().getTime();
-//     running = true;
-//     colorChangeElement.style.backgroundColor ='red'
-//     colorChangeElement.textContent="Arreter"
-//     // Mettre à jour le minuteur chaque seconde
-//     timerInterval = setInterval(updateTimer, 1000);
-//   }
-//   else{
-//     clearInterval(timerInterval);
-//     running = false;
-//     colorChangeElement.style.backgroundColor ='white'
-//     colorChangeElement.textContent="Commencer"
-//     timerElement.textContent = "0:00";
-    
-//   }
+function time() {
+    startTime = new Date().getTime();
+    running = true;
 
-// }
+    // Mettre à jour le minuteur chaque seconde
+    timerInterval = setInterval(updateTimer, 1000);
+ 
+}
+
 
     function deact() {
       const text = deactivate.textContent;
@@ -163,7 +146,7 @@ function updateTimer() {
       }
     }
 // Ajouter un gestionnaire d'événement pour le clic sur le bouton
-// document.getElementById('start').addEventListener('click', changeColor);
+
 
     // Dummy data for the graph (replace this with your data)
     const chartData = {

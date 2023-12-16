@@ -6,9 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_,or_
 from flask_socketio import SocketIO, emit, send,join_room
 from flask_cors import CORS
-import dash, cv2
-import dash_core_components as dcc
-import dash_html_components as html
+import cv2
 import mediapipe as mp
 
 mp_drawing = mp.solutions.drawing_utils
@@ -77,16 +75,13 @@ def visiteur() :
 def rula() :
     return render_template('rula.html')
 
+@app.route('/start')
+def start() :
+    return render_template('start.html')
+
 @app.route('/video_feed_1')
 def video_feed_1():
     return Response(gen(VideoCamera(0)), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-
-
-
-
-
 
 
 
