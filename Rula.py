@@ -349,6 +349,6 @@ params = {
 
 
 
-print(f'Le Score final de la méthode RULA pour cette posture est: {score_final_from_table_c(params)}')
+# print(f'Le Score final de la méthode RULA pour cette posture est: {score_final_from_table_c(params)}')
 
 # On devrait obtenir 7 comme score final de RULA pour ces paramètres (voir video youtube https://www.youtube.com/watch?v=Ubmd5niUrFQ&t=238s  minute 9:40)

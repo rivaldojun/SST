@@ -47,9 +47,15 @@
   </div>
     <div class="row mt-1" style="background-color: rgb(200, 227, 255);color: rgb(0, 0, 0);">
       <div class="col-md-6 container p-3 ">
-       <a  href="/start" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;">Commencer</h6></a>
+        <div class="row">
+          <div class="col-md-5">
+            <a  href="/start/0" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;">Start on webcam</h6></a>
+          </div>
+          <div class="col-md-5">
+            <a  href="/start/1" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;">Start on external cam</h6></a>
+          </div>
+        </div>
         <video id="webcam" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;"  autoplay>
-            <!-- <source src="{{ url_for('video_feed_1') }}" type="video/mp4"> -->
         </video>
         
         

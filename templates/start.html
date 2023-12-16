@@ -45,9 +45,8 @@
   </div>
     <div class="row mt-1" style="background-color: rgb(200, 227, 255);color: rgb(0, 0, 0);">
       <div class="col-md-6 container p-3 ">
-       <a  onclick="history.back()" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(255, 255, 255);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;background-color: red;">Arreter</h6></a>
-        <img id="vid" src="{{ url_for('video_feed_1') }}" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;">
-        
+       <a href="#"  onclick="history.back()" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(255, 255, 255);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;background-color: red;">Arreter</h6></a>
+        <img id="vid" src="{{ url_for('video_feed_1',id=id) }}" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;">
       </div>
       <div class="col-md-6 container p-3">
        <div id="timer">0:00</div>
@@ -58,7 +57,8 @@
         </a>
       </div>
     </div>
-  
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
     <script>
         
         let timerInterval;
@@ -147,25 +147,34 @@ function updateTimer() {
     }
 // Ajouter un gestionnaire d'événement pour le clic sur le bouton
 
+// Connexion à Socket.IO
+var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-    // Dummy data for the graph (replace this with your data)
-    const chartData = {
-      labels: ['January', 'February', 'March', 'April', 'May'],
-      datasets: [{
+socket.on('list_update', function(data) {
+    // Mettre à jour les données du graphique
+    myChart.data.datasets[0].data = data.newData; // Assurez-vous que 'newData' correspond à la structure de vos données
+    myChart.update();
+});
+
+// Données initiales du graphique
+const chartData = {
+    labels: ['January', 'February', 'March', 'April', 'May'],
+    datasets: [{
         label: 'Sample Data',
-        data: [12, 19, 3, 5, 2],
+        data: [12, 19, 3, 5, 2], // Valeurs initiales, seront mises à jour par Socket.IO
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1
-      }]
-    };
+    }]
+};
 
-    // Create the graph using Chart.js
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: chartData,
-    });
+// Création du graphique avec Chart.js
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: chartData,
+});
+
     </script>
   
     <!-- Bootstrap JS, Popper.js, and jQuery -->
