@@ -45,21 +45,48 @@
   </div>
     <div class="row mt-1" style="background-color: rgb(200, 227, 255);color: rgb(0, 0, 0);">
       <div class="col-md-6 container p-3 ">
-       <a href="#"  onclick="history.back()" style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(255, 255, 255);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;background-color: red;">Arreter</h6></a>
+       <a href="#"   style="text-decoration: none;"> <h6 id="start" class="mb-4 text-center container" style="color: rgb(255, 255, 255);padding: 10px;width: fit-content;border-radius: 3px;text-decoration: none;background-color: red;">Arreter</h6></a>
         <img id="vid" src="{{ url_for('video_feed_1',id=id) }}" width="100%" height="auto" style="padding-left: 20px;border-radius: 2px;display: block;">
       </div>
       <div class="col-md-6 container p-3">
-       <div id="timer">0:00</div>
-        <h6 class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;">Score RULA</h6>
-        <canvas id="myChart" width="100%" height="50vh"></canvas>
-        <a href="#" class="container mt-5" style="display: flex;text-align: center;justify-content: center;background-color: blue;color: white;padding: 20px;width: fit-content;border-radius: 8px;text-decoration: none;">
+       <div id="timer" style="font-weight: bold;color: red;">0:00</div>
+        <h6 class="mb-4 text-center container" style="color: rgb(0, 0, 0);padding: 10px;width: fit-content;border-radius: 3px;color: red;text-decoration: underline;">EVOLUTION EN FONCTION DU TEMPS</h6>
+        <canvas id="scoreChart" width="100%" height="40vh"></canvas>
+        <h6 style="text-align: center;color: rgb(255, 79, 79);text-decoration: underline;">SCORE ACTUEL</h6>
+        <h1 id="score" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-weight: bold;color: royalblue;text-align: center;"></h1>
+        
+        <a href="/activite" class="container mt-5" style="display: flex;text-align: center;justify-content: center;background-color: blue;color: white;padding: 20px;width: fit-content;border-radius: 8px;text-decoration: none;">
             Voir rapport d'activité
         </a>
       </div>
     </div>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.1/socket.io.js"></script>
     <script>
+      let scores = [];
+      const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+            // Request data every second
+      setInterval(() => {
+      socket.emit('request_data');
+      }, 1000);
+
+      // Listen for 'data_response' event from the server
+      socket.on('data_response', function(data) {
+      console.log('Data received:', data);
+      console.log(data)
+      document.getElementById('score').textContent = data.score || '';
+
+      if (data.score) {
+        scores.push(data.score);
+        updateChart(scores); // Mettre à jour le graphique
+    }
+      
+      });
+      document.getElementById('start').addEventListener('click', function() {
+    let scoresStr = scores.join(','); // Convertit le tableau en chaîne de caractères
+    window.location.href = `/enregistrer/${encodeURIComponent(scoresStr)}`; // Redirige vers l'URL avec les scores
+});
         
         let timerInterval;
     let startTime;
@@ -148,32 +175,40 @@ function updateTimer() {
 // Ajouter un gestionnaire d'événement pour le clic sur le bouton
 
 // Connexion à Socket.IO
-var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-socket.on('list_update', function(data) {
-    // Mettre à jour les données du graphique
-    myChart.data.datasets[0].data = data.newData; // Assurez-vous que 'newData' correspond à la structure de vos données
-    myChart.update();
-});
 
 // Données initiales du graphique
-const chartData = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
-    datasets: [{
-        label: 'Sample Data',
-        data: [12, 19, 3, 5, 2], // Valeurs initiales, seront mises à jour par Socket.IO
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-    }]
-};
+let chart = null;
 
-// Création du graphique avec Chart.js
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: chartData,
-});
+function updateChart(scores) {
+    const ctx = document.getElementById('scoreChart').getContext('2d');
+    if (!chart) {
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: scores.map((_, index) => index + 1),
+                datasets: [{
+                    label: 'Score',
+                    data: scores,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } else {
+        chart.data.labels = scores.map((_, index) => index + 1);
+        chart.data.datasets[0].data = scores;
+        chart.update();
+    }
+}
+
 
     </script>
   

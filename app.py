@@ -12,8 +12,11 @@ import threading
 import time
 import mediapipe as mp
 from Rula import score_final_from_table_c
+import datetime
 
-
+messages = {}
+messages['score'] = ''
+messages['score_inst'] = ''
 
 
 app=Flask(__name__)
@@ -29,7 +32,9 @@ socketio.init_app(app, cors_allowed_origins="*")
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.Integer, nullable=False)
+    numbers = db.Column(db.String, nullable=False)
+    nom=db.Column(db.String, nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
 with app.app_context():
         db.create_all()
@@ -184,7 +189,6 @@ class VideoCamera():
             # new_score = Score(value=score_rula)
             # db.session.add(new_score)
             # db.session.commit()
-            s.append(score_rula)
             return jpeg.tobytes(),score_rula
 
 
@@ -192,9 +196,50 @@ class VideoCamera():
 def visiteur() :
     return render_template('visiteur.html',INSCRIPTION='SIGN UP',CONNEXION='LOG IN')
 
+@app.route('/submit', methods=['POST','GET'])
+def submit():
+    if request.method=='POST':
+        name = request.form['name']
+        session['nom']=name
+        return redirect(url_for('rula'))
+    return render_template('nom.html')
+
+@app.route('/activite')
+def activite():
+    nom_utilisateur = session.get('nom')
+    activites=Score.query.filter_by(nom=nom_utilisateur).all()
+    return render_template('activite.html', activites=activites)
+
+
+@app.route('/activite_plus/<id>')
+def activite_plus(id):
+    activite=Score.query.filter_by(id=id).first()
+    numbers_list = [int(n) for n in activite.numbers.split(',')]
+    return render_template('graph_activite.html', numbers_list=numbers_list)
+
+
+@app.route('/enregistrer/<str_score>')
+def enregistrer(str_score):
+    # Ici, vous devez également obtenir le nom de l'utilisateur ou un identifiant unique
+    # Pour cet exemple, je vais utiliser un nom statique
+    nom_utilisateur = session.get('nom')
+
+    # Créer une nouvelle instance de Score
+    new_score = Score(numbers=str_score, nom=nom_utilisateur)
+
+    # Ajouter l'instance à la base de données
+    db.session.add(new_score)
+    db.session.commit()
+
+    return redirect(url_for('visiteur'))
+
 @app.route('/rula')
 def rula() :
     return render_template('rula.html')
+
+@app.route('/how')
+def how() :
+    return render_template('how.html')
 
 @app.route('/start/<int:id>')
 def start(id) :
@@ -203,18 +248,28 @@ def start(id) :
 def gen(camera):
     while True:
         frame,score= camera.get_frame()
+        messages['score']=str(score)
+        messages['score_inst'] =str(score)
+
         
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        
+
+@socketio.on('request_data')
+def request_data():
+    # Fetch or compute the latest data
+    data = {
+        'score': messages['score'],
+        'score_inst': messages['score_inst']
+    }
+    socketio.emit('data_response', data)
 
 @app.route('/video_feed_1/<int:id>')
 def video_feed_1(id):
     return Response(gen(VideoCamera(id)), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@socketio.on('some_event')
-def handle_my_custom_event():
-    data_to_send = [10, 20, 30, 40, 50]  # Vos données mises à jour
-    socketio.emit('list_update', {'newData': s})
+
 
 if __name__=="__main__":
     socketio.run(app,debug=True)

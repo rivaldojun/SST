@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %}Epsilearn{% endblock %}
+
+
+{% block content %}
+<div class="container">
+<h1>Activité de l'utilisateur</h1>
+<div class="row">
+    {% if activites %}
+
+    <div class="card-body" style="background-color: rgb(189, 206, 234);border-radius: 10px;padding: 10px;">
+        <ul class="list-unstyled">
+            {% for activite in activites %}
+                <li><b style="text-decoration: underline;">NOM</b><br>{{ activite.nom }}</li>
+                <li><b style="text-decoration: underline;">DATE</b><br>{{activite.date.strftime('%Y-%m-%d %H:%M')}}</li>
+                <a href="/activite_plus/{{activite.id}}" class="btn btn-dark">Voir plus</a>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% else %}
+        <p>Aucune activité trouvée.</p>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
